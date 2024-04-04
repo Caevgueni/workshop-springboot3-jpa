@@ -26,7 +26,7 @@ public class UserResource {
 		return  ResponseEntity.ok().body(list);
 	}
 
-	@GetMapping(value = "/{id}")
+	@GetMapping(value = "/{id}") // isso implica que a minha requesicao vai aceitar o id dentro da url
 	public ResponseEntity<User> findById(@PathVariable Long id) {
 		User obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);

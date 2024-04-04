@@ -1,22 +1,23 @@
 package com.devcarlos.course.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
 
 @Entity
 @Table(name = "tb_user")
-public class User implements Serializable{
-	
-	
+public class User implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	@Id  
+	@Id
 	// indica a nossa cheve primario é o atrebuto id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // isto é para gerar id automatimente
 	private Long id;
@@ -24,9 +25,13 @@ public class User implements Serializable{
 	private String email;
 	private String phone;
 	private String password;
-	
+
+	@OneToMany(mappedBy = "client") // isto relacao de Um para muito, onde informamos que o atrebuto que está la no
+									// lado do cliente esta com nome "client"
+	private List<Order> orders = new ArrayList<>();
+
 	public User() {
-		
+
 	}
 
 	public User(Long id, String name, String email, String phone, String password) {
@@ -78,6 +83,10 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
+	public List<Order> getOrders() {
+		return orders;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -94,5 +103,5 @@ public class User implements Serializable{
 		User other = (User) obj;
 		return Objects.equals(id, other.id);
 	}
-	
+
 }
