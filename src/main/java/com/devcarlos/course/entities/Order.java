@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +26,7 @@ public class Order implements Serializable {
 	// indica a nossa cheve primario é o atrebuto id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // isto é para gerar id automatimente
 	private Long id;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-HH-dd'T'HH:mm.ss'Z'", timezone ="GMT" )
 	private Instant moment;
 
 	@ManyToOne // isto é para informaca a JPA que isso é uma relacao de muitos pora um

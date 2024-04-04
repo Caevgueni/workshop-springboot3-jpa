@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,6 +28,7 @@ public class User implements Serializable {
 	private String phone;
 	private String password;
 
+	@JsonIgnore // para que nao haja loop tanto no lado do cliente =User com no lado do pedido= Order
 	@OneToMany(mappedBy = "client") // isto relacao de Um para muito, onde informamos que o atrebuto que está la no
 									// lado do cliente esta com nome "client"
 	private List<Order> orders = new ArrayList<>();
