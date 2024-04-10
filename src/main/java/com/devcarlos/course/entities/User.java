@@ -30,7 +30,7 @@ public class User implements Serializable {
 
 	@JsonIgnore // para que nao haja loop tanto no lado do cliente =User com no lado do pedido= Order
 	@OneToMany(mappedBy = "client") // isto relacao de Um para muito, onde informamos que o atrebuto que está la no
-									// lado do cliente esta com nome "client"
+									// lado do cliente esta com nome "client" isto é na classe oreder
 	private List<Order> orders = new ArrayList<>();
 
 	public User() {

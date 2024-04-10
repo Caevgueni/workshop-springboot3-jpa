@@ -2,7 +2,9 @@ package com.devcarlos.course.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import com.devcarlos.course.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -13,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -37,6 +40,9 @@ public class Order implements Serializable {
 	@JoinColumn(name = "client_id") // assim infomamos o nome que esta chave estrangeiraa vai ter na no banco de
 									// dados
 	private User client;
+	@OneToMany(mappedBy = "id.order") // isto é no ordemItem tem id e o id é que tem order é por isso que ficou asssim
+	private Set<OrderItem> items= new HashSet<>();
+	
 
 	public Order() {
 
@@ -86,6 +92,10 @@ public class Order implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	
+	public Set<OrderItem> getItems(){
+		return items;
 	}
 
 	@Override
