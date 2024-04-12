@@ -13,6 +13,8 @@ import com.devcarlos.course.repositories.UserRepository;
 import com.devcarlos.course.services.exceptions.DatabaseException;
 import com.devcarlos.course.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Component // assim registamos o UserService como componente do spring para que as outras
 			// classes possam beneficiar das suas dependencia e tambem existe anotecion com
 			// nome de @Service
@@ -53,11 +55,14 @@ public class UserService {
 	public User update(Long id, User obj) { // é do tipo User porque vai retornar usuaria atualizado, com id de usaurio
 											// que vamos atualizar eo o obj user que vai conter os dados para serem
 											// atualizados
-		
+		try {
 		User entity = repository.getReferenceById(id);
 		updateData(entity, obj); // isto vou atualizar o meu dados de  entity basiados na dados que chegaram do meu obj
         return repository.save(entity); // depois de td, aqui vou salvar no bd o meu entity
-	}
+		}catch(EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
+		}
 
 	private void updateData(User entity, User obj) { // este metodo é para atualizar os dados de entity com baso nos dados que chegaram do obj
 		entity.setName(obj.getName());
