@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.devcarlos.course.entities.User;
 import com.devcarlos.course.repositories.UserRepository;
+import com.devcarlos.course.services.exceptions.ResourceNotFoundException;
 
 @Component // assim registamos o UserService como componente do spring para que as outras
 			// classes possam beneficiar das suas dependencia e tambem existe anotecion com
@@ -24,7 +25,7 @@ public class UserService {
 	public User findById(Long id) { // procurar por id
 		Optional<User> obj = repository.findById(id); // retorna um objeto do tipo optional que é existente desde o java
 														// 08
-		return obj.get();
+		return obj.orElseThrow(()-> new ResourceNotFoundException(id));
 
 	}
 
