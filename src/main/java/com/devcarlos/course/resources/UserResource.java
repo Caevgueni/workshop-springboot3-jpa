@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,6 +52,12 @@ public class UserResource {
 	public ResponseEntity<Void> delete(@PathVariable Long id) { // é void porque nao vai retorar nada e usamos  o @PathVariable para que este meto possa reconecer o variavel id 
 		service.delete(id);
        return ResponseEntity.noContent().build(); // o noContent() ele vai tornar para nos uma resposta vazia e codigo http de uma resposta que nao tem conteudo é o 204
+	}
+	// anotacao para atualizar
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<User> padate(@PathVariable Long id, @RequestBody User obj) {
+		obj = service.update(id, obj);
+		return ResponseEntity.ok().body(obj);
 	}
 	
 }
